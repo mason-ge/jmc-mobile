@@ -5,6 +5,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Eclipse
+.classpath
+.project
+.settings/
+.rules
+
 # Editor directories and files
 .idea
 .vscode
@@ -12,3 +18,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+/classes/

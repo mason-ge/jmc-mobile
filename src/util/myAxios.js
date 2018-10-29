@@ -4,17 +4,17 @@ import { Indicator } from 'mint-ui';
 
 export const inteduce = Axios.create({
 
-	baseURL: 'http://yun.jmcsolution.cn:8080/JmcScm/rest/',
-	headers: {
-		'Content-Type': 'application/x-www-form-urlencoded'
-	},
-	transformRequest: [function (data) {
+// 	baseURL: 'http://yun.jmcsolution.cn:8080/JmcScm/rest/',
+// 	headers: {
+// 		'Content-Type': 'application/x-www-form-urlencoded'
+// 	},
+// 	transformRequest: [function (data) {
 
-		data = Qs.stringify(data);
-		return data;
-	}],
-	withCredentials: true   //加了这段就可以跨域了 
-});
+// 		data = Qs.stringify(data);
+// 		return data;
+// 	}],
+// 	withCredentials: true   //加了这段就可以跨域了 
+ });
 
 //inteduce拦截器---请求前拦截
 inteduce.interceptors.request.use(config => {
@@ -40,6 +40,4 @@ export const ajax = function (url) {
 	let strURL = "static/data" + url + '?t=' + new Date().getTime();
 	return inteduce.get(strURL);
 };
-export function axiosfetch(options) {
- 
-} 
+//export default myAxios;

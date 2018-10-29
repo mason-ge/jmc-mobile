@@ -9,7 +9,7 @@
 						<!--<p class="childTitle">{{val.p_title}}</p>-->
 						<ul>
 							<li v-for="prod in prodList" :key= prod>
-								<img :src="prod.img" :alt="value.name" />
+								<img :src="prod.img" :alt="prod.prodName" />
 							</li>
 						</ul>
 					</div>
@@ -23,10 +23,8 @@
 import { mapGetters } from "vuex";
 import BScroll from "better-scroll";
 import { Toast } from "mint-ui";
-//import $ from 'jquery';
-import axios from "axios";
 import qs from "qs";
-import {axiosfetch} from '../util';
+//import myAxios from '../../util/myAxios.js';
 export default {
   name: "",
   props: ["showWho"],
@@ -99,8 +97,8 @@ export default {
         pageNo: 1,
         pageSize: 15
       };
-      myax
-        .post("prod/getProdList", qs.stringify(postData))
+      this.axios
+        .post("http://localhost:8110/JmcScm/rest/prod/getProdList", (postData))
         .then(function(respone) {
           console.log(respone);
           // printjson = JSON.stringify(respone);
