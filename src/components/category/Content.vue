@@ -2,13 +2,13 @@
 	<div class="wrap">
 		<div class="wrapper" ref="wrapper">
 			<div class="content">
-				<div v-for="(v,i) in currentData" :key="i" class="divBox">
-					<!--<img v-if="v.topImg" class="titleImg" :src="v.topImg" :alt="v.title" />
-					<p v-else>{{v.title}}</p>-->
+				<div v-for="(secCatg,index) in secCatgList" :key="index" class="divBox">
+					<!--<img v-if="v.topImg" class="titleImg" :src="v.topImg" :alt="v.title" />-->
+					<p secCatg-else>{{secCatg.enumvName}}</p>
 					<div v-for="(val,index) in v.list" :key="index" class="groupBox">
-						<!--<p class="childTitle">{{val.p_title}}</p>-->
+						<!-- <p class="childTitle">{{val.p_title}}</p> -->
 						<ul>
-							<li v-for="prod in prodList" :key= prod>
+							<li v-for="(prod,index) in prodList" :key= index>
 								<img :src="prod.img" :alt="prod.prodName" />
 							</li>
 						</ul>
@@ -26,13 +26,14 @@ import { Toast } from "mint-ui";
 import qs from "qs";
 //import myAxios from '../../util/myAxios.js';
 export default {
-  name: "",
+  name: "Content",
   props: ["showWho"],
   data() {
     return {
       prodList: [],
       pageNo: 0,
-      contentScroll: null
+      contentScroll: null,
+      secCatgList : []
     };
   },
   computed: {
@@ -71,45 +72,28 @@ export default {
       });
     },
     //分页查询并显示数据
-    showData: function() {
-      var _self = this;
-      //var url = "http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getProdList";
-//axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-      // $.ajax({
-      //   type: "GET",
-      //   url: url,
-      // 	type:"post",
-      // 	contentType:'application/json;charset=UTF-8',
-      //   success: function(data) {
-      //     console.log(22)
-      //     printjson = JSON.stringify(data);
-      //     _self.list = data.data.rows;
-      //     var dataList = res.dataList;
-      //     for (var i in dataList) {
-      //       var item = dataList[i];
-      //       console.log(item)
-      //       _self.prodList.push(dataList[i]);
-      //     }
-      //   }
-      // });
+    showData() {
       var postData = {
         pageNo: 1,
-        pageSize: 15
+        pageSize: 15,
+        client : "0001"
       };
       this.axios
-        .post("http://localhost:8110/JmcScm/rest/prod/getProdList", (postData))
+        .post("http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getProdList", (postData))
         .then(function(respone) {
-          console.log(respone);
-          // printjson = JSON.stringify(respone);
-          // _self.list = respone.data.rows;
-          // var dataList = res.dataList;
-          // for (var i in dataList) {
-          //   var item = dataList[i];
-          //   console.log(item)
-          //   _self.prodList.push(dataList[i]);
-          // }
-          _self.prodList = respone.data.data;
+          this.prodList = respone.data.data;
+        })
+        .catch(function(erro) {});
+    },
+    //父级组件的点击触发的方法
+    refreshSecCatg(firstCatg){
+      var postData = {
+       firstDesc : firstCatg
+      };
+      this.axios
+        .post("http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getSecCatgByFirstCode", (postData))
+        .then(function(respone) {
+          this.secCatgList = respone.data.data;
         })
         .catch(function(erro) {});
     }
