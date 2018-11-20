@@ -7,9 +7,8 @@
 		    	:class="{'active':isActive==index}"
 		    	:key="index">{{catg.enumvName}}</li>
 		  </ul>
-			<v-content ref="v-content"></v-content>
 		</div>
-		
+		<v-content ref="mychild"></v-content>
 		<div class="right">
 			<v-content :showWho="showWho"></v-content>
 		</div>
@@ -42,7 +41,6 @@ export default {
     }
   },
   created() {
-    var _self = this;
     this.showCatg();
   },
   methods: {
@@ -50,7 +48,7 @@ export default {
       if (this.isActive != index) {
         this.isActive = parseInt(index);
 			}
-			this.$refs.v-content.refreshSecCatg(catg.enumvCode);
+			this.$refs.mychild.refreshSecCatg(catg.enumvCode);
     },
     _initScroll() {
       this.scroll = new BScroll(this.$refs.wrapper, {

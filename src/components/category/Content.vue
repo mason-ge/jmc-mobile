@@ -1,22 +1,28 @@
 <template>
-	<div class="wrap">
-		<div class="wrapper" ref="wrapper">
-			<div class="content">
-				<div v-for="(secCatg,index) in secCatgList" :key="index" class="divBox">
-					<!--<img v-if="v.topImg" class="titleImg" :src="v.topImg" :alt="v.title" />-->
-					<p secCatg-else>{{secCatg.enumvName}}</p>
-					<div v-for="(val,index) in v.list" :key="index" class="groupBox">
-						<!-- <p class="childTitle">{{val.p_title}}</p> -->
-						<ul>
+  <div class="wrap">
+    <div class="wrapper" ref="wrapper">
+      <div class="content">
+        <!-- <div v-for="(secCatg,index) in secCatgList" :key="index" class="divBox"> -->
+        <!--<img v-if="v.topImg" class="titleImg" :src="v.topImg" :alt="v.title" />-->
+        <!-- <p secCatg-else>{{secCatg.enumvName}}</p>
+					<div v-for="(val,index) in v.list" :key="index" class="groupBox"> -->
+        <!-- <p class="childTitle">{{val.p_title}}</p> -->
+        <!-- <ul>
 							<li v-for="(prod,index) in prodList" :key= index>
 								<img :src="prod.img" :alt="prod.prodName" />
 							</li>
 						</ul>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+				</div> -->
+        <li v-for="(secCatg,index) in secCatgList" :key=index>
+          <p secCatg-else>{{secCatg.enumvName}}</p>
+        </li>
+        <li v-for="(prod,index) in prodList" :key=index>
+          <img :src="prod.img" :alt="prod.prodName" />
+        </li>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,7 +39,7 @@ export default {
       prodList: [],
       pageNo: 0,
       contentScroll: null,
-      secCatgList : []
+      secCatgList: []
     };
   },
   computed: {
@@ -48,8 +54,8 @@ export default {
     }
   },
   created() {
-    var _self = this;
-    this.showData();
+    //var _self = this;
+    //this.showData();
   },
   methods: {
     _initScroll() {
@@ -73,26 +79,34 @@ export default {
     },
     //分页查询并显示数据
     showData() {
+      alert(11);
       var postData = {
         pageNo: 1,
         pageSize: 15,
-        client : "0001"
+        client: "0001"
       };
       this.axios
-        .post("http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getProdList", (postData))
+        .post(
+          "http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getProdList",
+          postData
+        )
         .then(function(respone) {
           this.prodList = respone.data.data;
         })
         .catch(function(erro) {});
     },
     //父级组件的点击触发的方法
-    refreshSecCatg(firstCatg){
+    refreshSecCatg(firstCatg) {
       var postData = {
-       firstDesc : firstCatg
+        firstDesc: firstCatg
       };
       this.axios
-        .post("http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getSecCatgByFirstCode", (postData))
+        .post(
+          "http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getSecCatgByFirstCode",
+          postData
+        )
         .then(function(respone) {
+          console.log(respone);
           this.secCatgList = respone.data.data;
         })
         .catch(function(erro) {});
