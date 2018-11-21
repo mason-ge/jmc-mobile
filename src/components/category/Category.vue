@@ -9,9 +9,9 @@
 		  </ul>
 		</div>
 		<v-content ref="mychild"></v-content>
-		<div class="right">
+		<!-- <div class="right">
 			<v-content :showWho="showWho"></v-content>
-		</div>
+		</div> -->
 		
   </div>
 </template>

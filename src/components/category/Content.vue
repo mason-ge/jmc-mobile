@@ -2,24 +2,26 @@
   <div class="wrap">
     <div class="wrapper" ref="wrapper">
       <div class="content">
-        <!-- <div v-for="(secCatg,index) in secCatgList" :key="index" class="divBox"> -->
-        <!--<img v-if="v.topImg" class="titleImg" :src="v.topImg" :alt="v.title" />-->
-        <!-- <p secCatg-else>{{secCatg.enumvName}}</p>
-					<div v-for="(val,index) in v.list" :key="index" class="groupBox"> -->
-        <!-- <p class="childTitle">{{val.p_title}}</p> -->
-        <!-- <ul>
-							<li v-for="(prod,index) in prodList" :key= index>
-								<img :src="prod.img" :alt="prod.prodName" />
-							</li>
-						</ul>
-					</div>
-				</div> -->
-        <li v-for="(secCatg,index) in secCatgList" :key=index>
-          <p secCatg-else>{{secCatg.enumvName}}</p>
-        </li>
-        <li v-for="(prod,index) in prodList" :key=index>
-          <img :src="prod.img" :alt="prod.prodName" />
-        </li>
+      <div class="content-sec">
+                <li v-for="(catg,index) in secCatgList" 
+		    	:class="{'active':isActive==index}"
+		    	:key="index">{{catg.enumvName}}</li>
+        </div>  
+
+        <div v-for="(v,i) in currentData" :key="i" class="divBox">
+          <!--<img v-if="v.topImg" class="titleImg" :src="v.topImg" :alt="v.title" />
+					<p v-else>{{v.title}}</p>-->
+
+          
+          <div v-for="(val,index) in v.list" :key="index" class="groupBox">
+            <!--<p class="childTitle">{{val.p_title}}</p>-->
+            <ul>
+              <li v-for="prod in prodList" :key=prod>
+                <img :src="prod.img" :alt="prod.prodName" />
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -39,7 +41,8 @@ export default {
       prodList: [],
       pageNo: 0,
       contentScroll: null,
-      secCatgList: []
+      secCatgList: [],
+      isActive: 0 //当前选择 样式
     };
   },
   computed: {
@@ -54,8 +57,8 @@ export default {
     }
   },
   created() {
-    //var _self = this;
-    //this.showData();
+
+    this.showData();
   },
   methods: {
     _initScroll() {
@@ -79,37 +82,47 @@ export default {
     },
     //分页查询并显示数据
     showData() {
-      alert(11);
+   var _self = this;
       var postData = {
         pageNo: 1,
         pageSize: 15,
-        client: "0001"
+        client: "0001",
       };
-      this.axios
+      _self.axios
         .post(
           "http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getProdList",
           postData
         )
         .then(function(respone) {
-          this.prodList = respone.data.data;
+          console.log(respone.data.data)
+           
+          _self.prodList = respone.data.data;
+          console.log(_self.prodList);
         })
-        .catch(function(erro) {});
+        .catch(function(erro) {
+          console.log(erro);
+        });
     },
     //父级组件的点击触发的方法
     refreshSecCatg(firstCatg) {
+      var _self = this;
       var postData = {
         firstDesc: firstCatg
       };
-      this.axios
+      _self.axios
         .post(
           "http://yun.jmcsolution.cn:8080/JmcScm/rest/prod/getSecCatgByFirstCode",
           postData
         )
         .then(function(respone) {
-          console.log(respone);
-          this.secCatgList = respone.data.data;
+         
+          _self.secCatgList = respone.data.data;
+                    console.log(_self.secCatgList);
+          
         })
-        .catch(function(erro) {});
+        .catch(function(erro) {
+           console.log(erro);
+        });
     }
   },
   mounted() {
@@ -137,6 +150,30 @@ export default {
       width: 100%;
       padding: 1.2rem 0.2rem;
       box-sizing: border-box;
+      .content-sec {
+        height: 25px;
+        width: 100%;
+        .li {
+        width: 100%;
+        height: 1rem;
+        line-height: 1rem;
+        text-align: center;
+        box-sizing: border-box;
+        border-bottom: 1px solid #eaeaea;
+        border-right: 1px solid #eaeaea;
+        &:last-child {
+          border-bottom: none;
+          border-bottom: 0px solid #eaeaea;
+        }
+        &.active {
+          background: #f4f4f4;
+          color: red;
+          border-right: none;
+          border-right: 0 solid #eaeaea;
+        }
+      }
+      }
+
       .divBox {
         position: relative;
         width: 100%;
