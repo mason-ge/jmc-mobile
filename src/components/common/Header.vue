@@ -1,11 +1,11 @@
 <template>
   <div class="homeHeader">
-		<div class="map" @click="handleMap">
+		<!-- <div class="map" @click="handleMap">
 			<span>
 				<i class="iconfont icon-map"></i>
 				莆田
 			</span>
-		</div>
+		</div> -->
 		<div class="search" @click="handleSearch">
 			<span>
 				<i class="iconfont icon-search"></i>

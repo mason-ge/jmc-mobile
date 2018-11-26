@@ -15,13 +15,13 @@
 				</router-link>
 			</li>
 			
-			<li class="message">
+			<!-- <li class="message">
 				<router-link tag="div" to="/message">
 					<i class="iconfont icon-xiaoxi"></i>
 					<p>消息</p>
 					<i class="isRead" v-show="msgIsRead">{{msgIsRead}}</i>
 				</router-link>
-			</li>
+			</li> -->
 			
 			<li>
 				<router-link tag="div" to="/cart">
@@ -70,7 +70,7 @@
   	bottom: 0;
   	left: 0;
   	right: 0;
-  	height: 1.1rem;
+  	height: 0.9rem;
   	border-top:1px solid #CCCCCC;
   	box-sizing: border-box;
   	font-size: 0.24rem;

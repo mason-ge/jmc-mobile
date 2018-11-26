@@ -1,18 +1,15 @@
 <template>
-  <div class="category" >
-  	<v-categoryheader></v-categoryheader>
+  <div class="category">
+    <v-categoryheader></v-categoryheader>
     <div class="wrapper" ref="wrapper">
-		  <ul class="content" ref="content">
-		    <li v-for="(catg,index) in catgList" @click="handleSelect(catg,index)"
-		    	:class="{'active':isActive==index}"
-		    	:key="index">{{catg.enumvName}}</li>
-		  </ul>
-		</div>
-		<v-content ref="mychild"></v-content>
-		<!-- <div class="right">
-			<v-content :showWho="showWho"></v-content>
-		</div> -->
-		
+      <ul class="content" ref="content">
+        <li v-for="(catg,index) in catgList" @click="handleSelect(catg,index)" :class="{'active':isActive==index}" :key="index">{{catg.enumvName}}</li>
+      </ul>
+    </div>
+    <div class="right">
+      <v-content ref="mychild"></v-content>
+    </div>
+
   </div>
 </template>
 
@@ -35,10 +32,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["categoryData"]),
-    showWho() {
-      return this.categoryData.data.cateList[this.isActive];
-    }
+    ...mapGetters(["categoryData"])
+    // showWho() {
+    //   return this.categoryData.data.cateList[this.isActive];
+    // }
   },
   created() {
     this.showCatg();
@@ -47,8 +44,8 @@ export default {
     handleSelect(catg, index) {
       if (this.isActive != index) {
         this.isActive = parseInt(index);
-			}
-			this.$refs.mychild.refreshSecCatg(catg.enumvCode);
+      }
+      this.$refs.mychild.refreshSecCatg(catg.enumvCode);
     },
     _initScroll() {
       this.scroll = new BScroll(this.$refs.wrapper, {
@@ -65,7 +62,9 @@ export default {
     showCatg: function() {
       var _self = this;
       this.axios
-        .get("http://yun.jmcsolution.cn:8080/JmcScm/rest/sys/getEnumListByCode/PLYJ")
+        .get(
+          "http://yun.jmcsolution.cn:8080/JmcScm/rest/sys/getEnumListByCode/PLYJ"
+        )
         .then(function(respone) {
           _self.catgList = respone.data.data;
         })

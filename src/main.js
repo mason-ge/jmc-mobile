@@ -23,6 +23,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios,axios);
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller);
 
 /* eslint-disable no-new */
 new Vue({
