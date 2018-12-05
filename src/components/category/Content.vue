@@ -1,16 +1,40 @@
 <template>
   <div class="wrap">
-    <div class="wrapper" ref="wrapper">
+    <div
+      class="wrapper"
+      ref="wrapper"
+    >
       <div class="content">
-        <div class="content-sec" v-show="showFlg">
-          <span v-for="(tab ,index) in secCatgList" :class="{cur:isActive==index}" :key="index" @click="isActive=index,tabChange(tab.enumvName)">{{tab.enumvName}}</span>
+        <div
+          class="content-sec"
+          v-show="showFlg"
+        >
+          <span
+            v-for="(tab ,index) in secCatgList"
+            :class="{cur:isActive==index}"
+            :key="index"
+            @click="isActive=index,tabChange(tab.enumvName)"
+          >{{tab.enumvName}}</span>
         </div>
         <div class="divBox">
           <div class="groupBox">
-            <scroller :on-refresh="refresh" :on-infinite="infinite" ref="myscroller" class="file-lists" no-data-text="没有更多商品哦">
+            <scroller
+              :on-refresh="refresh"
+              :on-infinite="infinite"
+              ref="myscroller"
+              class="file-lists"
+              no-data-text="没有更多商品哦"
+            >
               <ul>
-                <li v-for="(value,index) in prodList" :key="index" @click="handleClick(value,index)">
-                  <img v-bind:src="value.img" :alt="value.prodName" />
+                <li
+                  v-for="(value,index) in prodList"
+                  :key="index"
+                  @click="handleClick(value,index)"
+                >
+                  <img
+                    v-bind:src="value.img"
+                    :alt="value.prodName"
+                  />
                   <span class="text">{{value.prodName}}</span>
                 </li>
               </ul>
@@ -41,7 +65,8 @@ export default {
       pageSize: 10,
       client: "0001",
       isLastPage: false,
-      showFlg: false
+      showFlg: false,
+      infiniteFlg: false //上拉加载的flag，在选择一级菜单不是全部的时候不能执行上拉
     };
   },
   components: {},
@@ -83,7 +108,8 @@ export default {
           postData
         )
         .then(function(respone) {
-          _self.isLastPage = respone.data.data.isLastPage;
+          // _self.isLastPage = respone.data.data.isLastPage;
+          _self.isLastPage = false;
           // 判断是下拉刷新还是上拉加载（这一步也是比较巧妙的，当然也很好理解）
           if (_self.pageNo == 1) {
             _self.prodList = respone.data.data;
@@ -97,7 +123,6 @@ export default {
     },
     // 下拉刷新
     refresh() {
-       alert("下拉刷新");
       var _self = this;
       _self.pageNo = 1; //重置页数刷新每次页数都是第一页
       _self.isLastPage = false; //重置数据判断
@@ -111,31 +136,46 @@ export default {
     },
     // 上拉加载
     infinite(done) {
-       alert("上拉加载");
       var _self = this;
-      _self.$refs.myscroller.finishInfinite(true); //这个方法是不让它加载了，显示“没有更多数据”，要不然会一直转圈圈
-      // if (_self.isLastPage) {
-      //   _self.$refs.myscroller.finishInfinite(true); //这个方法是不让它加载了，显示“没有更多数据”，要不然会一直转圈圈
-      // } else {
-      //   setTimeout(() => {
-      //     _self.pageNo++; //下拉一次页数+1
-      //     _self.showData();
-      //     done(); //进行下一次加载操作
-      //   }, 1500);
-      // }
+      if (_self.nowFirstCatg == "所有品类") {
+        _self.doInfinite(done);
+      } else {
+        alert(_self.infiniteFlg)
+        if (_self.infiniteFlg) {
+          doInfinite(done);
+        } else {
+          _self.$refs.myscroller.finishInfinite(true);
+        }
+      }
+    },
+    doInfinite(done) {
+      var _self = this;
+      if (_self.isLastPage) {
+        _self.$refs.myscroller.finishInfinite(true); //这个方法是不让它加载了，显示“没有更多数据”，要不然会一直转圈圈
+      } else {
+        setTimeout(() => {
+          _self.showData();
+          _self.pageNo++; //下拉一次页数+1
+          done(); //进行下一次加载操作
+        }, 1500);
+      }
     },
     //父级组件的点击触发的方法
     refreshSecCatg(firstCatg) {
       var _self = this;
       _self.pageNo = 1;
       _self.prodList = [];
+     
       _self.secCatgList = [];
-      //讲当前的品类一级传给全局变量
+      //将当前的品类一级传给全局变量
       _self.nowFirstCatg = firstCatg;
+
       if (firstCatg === "所有品类") {
         _self.showFlg = false;
+        _self.infiniteFlg = true;
         _self.showData();
       } else {
+        _self.infiniteFlg = false;
         _self.showFlg = true;
         var postData = {
           firstDesc: firstCatg
@@ -152,11 +192,15 @@ export default {
             console.log(erro);
           });
       }
+       console.log(_self.prodList)
     },
     //选择二级品类刷新
     tabChange(secCatg) {
       var _self = this;
       _self.nowSecCatg = secCatg;
+      _self.infiniteFlg = true;
+      _self.pageNo = 1;
+      _self.prodList = [];
       _self.showData();
     },
     mounted() {
@@ -189,8 +233,8 @@ export default {
 
       .content-sec {
         font-size: 0;
-        height: 25px;
-        line-height: 25px;
+        height: 70px;
+        line-height: 30px;
         //display: none;
       }
       .content-sec > span {
