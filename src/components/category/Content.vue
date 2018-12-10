@@ -29,7 +29,7 @@
                 <li
                   v-for="(value,index) in prodList"
                   :key="index"
-                  @click="handleClick(value,index)"
+                  @click="handleClick(value)"
                 >
                   <img
                     v-bind:src="value.img"
@@ -83,14 +83,23 @@ export default {
         click: true
       });
     },
-    handleClick({ name }) {
-      Toast({
-        message: name,
-        position: "top",
-        duration: 1000,
-        className: "myToast"
+    handleClick(value) {
+      // Toast({
+      //   message: value,
+      //   position: "top",
+      //   duration: 1000,
+      //   className: "myToast"
+      // });
+      //跳转到商品详情页面
+      this.$router.push({
+        name: "GoodInfo",
+        params: {
+          name : "GoodInfo",
+          data: value
+        }
       });
     },
+
     //分页查询并显示数据
     showData() {
       var _self = this;
@@ -140,7 +149,6 @@ export default {
       if (_self.nowFirstCatg == "所有品类") {
         _self.doInfinite(done);
       } else {
-        alert(_self.infiniteFlg)
         if (_self.infiniteFlg) {
           doInfinite(done);
         } else {
@@ -165,7 +173,7 @@ export default {
       var _self = this;
       _self.pageNo = 1;
       _self.prodList = [];
-     
+
       _self.secCatgList = [];
       //将当前的品类一级传给全局变量
       _self.nowFirstCatg = firstCatg;
@@ -192,7 +200,7 @@ export default {
             console.log(erro);
           });
       }
-       console.log(_self.prodList)
+      console.log(_self.prodList);
     },
     //选择二级品类刷新
     tabChange(secCatg) {
