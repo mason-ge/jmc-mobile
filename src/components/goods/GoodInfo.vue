@@ -18,30 +18,15 @@
             :style="{backgroundColor:'rgba(0,0,0,'+topOption.btnBackColor+')',color:topOption.btnFontColor}"
           ></i>
         </div>
-        <div
-          class="top2"
-          :style="{opacity:topOption.topOpacity}"
-        >
+        <div class="top2" :style="{opacity:topOption.topOpacity}">
           <ul :class="act">
-            <li
-              class="actGoods"
-              @click="handleClick('actGoods','mainImg')"
-            >宝贝</li>
+            <li class="actGoods" @click="handleClick('actGoods','mainImg')">宝贝</li>
 
-            <li
-              class="actComment"
-              @click="handleClick('actComment','commentBox')"
-            >评价</li>
+            <li class="actComment" @click="handleClick('actComment','commentBox')">评价</li>
 
-            <li
-              class="actDetail"
-              @click="handleClick('actDetail','detailsBox')"
-            >详情</li>
+            <li class="actDetail" @click="handleClick('actDetail','detailsBox')">详情</li>
 
-            <li
-              class="actRecommend"
-              @click="handleClick('actRecommend','recommendBox')"
-            >推荐</li>
+            <li class="actRecommend" @click="handleClick('actRecommend','recommendBox')">推荐</li>
           </ul>
         </div>
         <div
@@ -51,55 +36,38 @@
       </div>
       <div class="main">
         <div class="img">
-          <img
-           v-bind:src="goodsData.img"
-		   :alt="goodsData.prodName"
-            width="100%"
-          />
+          <img v-bind:src="goodsData.img" :alt="goodsData.prodName" width="100%">
           <span>1/1</span>
         </div>
 
-        <div
-          class="priceBox"
-          ref="priceBox"
-        >
+        <div class="priceBox" ref="priceBox">
           <v-price :goodData="getGoodInfo.data"></v-price>
         </div>
 
         <!--评论-->
-        <div
-          class="commentBox"
-          ref="commentBox"
-        >
+        <div class="commentBox" ref="commentBox">
           <v-comment :goodData="getGoodInfo.data"></v-comment>
         </div>
 
         <!--详情-->
-        <div
-          class="detailsBox"
-          ref="detailsBox"
-        >
+        <div class="detailsBox" ref="detailsBox">
           <v-details></v-details>
         </div>
 
         <!--推荐-->
-        <div
-          class="recommendBox"
-          ref="recommendBox"
-        >
+        <div class="recommendBox" ref="recommendBox">
           <v-recommend></v-recommend>
         </div>
 
         <!--加入购物车块-->
         <v-addcart :goodData="getGoodInfo.data"></v-addcart>
-
       </div>
       <!-- <div
         class="notFound"
         v-else-if="getGoodInfo.isOk == 0"
       >
         找不到
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -183,7 +151,6 @@ export default {
       };
     },
     getParams() {
-	
       // 取到路由带过来的参数
       let routerParams = this.$route.params.data;
       // 将数据放在当前组件的数据内
@@ -191,18 +158,17 @@ export default {
     }
   },
   created() {
-	this.goodsData =  this.$route.params.data;
+    this.goodsData = this.$route.params.data;
     this.$store.dispatch("search", {
       v: this.$route.query.k
-	});
-
+    });
   },
   mounted() {
     window.scrollTo(0, 0);
     setTimeout(() => {
       this.moveFn();
     }, 20);
-  },
+  }
 };
 </script>
 

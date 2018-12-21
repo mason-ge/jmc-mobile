@@ -3,13 +3,17 @@
     <v-categoryheader></v-categoryheader>
     <div class="wrapper" ref="wrapper">
       <ul class="content" ref="content">
-        <li v-for="(catg,index) in catgList" @click="handleSelect(catg,index)" :class="{'active':isActive==index}" :key="index">{{catg.enumvName}}</li>
+        <li
+          v-for="(catg,index) in catgList"
+          @click="handleSelect(catg,index)"
+          :class="{'active':isActive==index}"
+          :key="index"
+        >{{catg.enumvName}}</li>
       </ul>
     </div>
     <div class="right">
       <v-content ref="mychild"></v-content>
     </div>
-
   </div>
 </template>
 

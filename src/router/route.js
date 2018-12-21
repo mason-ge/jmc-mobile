@@ -8,6 +8,7 @@ import User from '@/components/user/User'; //用户中心
 
 import MsgInfo from '@/components/message/MsgInfo'; //聊天页
 import Login from '@/components/login/Login'; //登陆
+import LoginNew from '@/components/login/LoginNew'; //登陆新
 
 import Order from '@/components/user/Order'; //所有订单
 import UserMain from '@/components/user/Main'; //个人中心主页
@@ -19,62 +20,62 @@ import Search from '@/components/search/Search' //搜索页面
 Vue.use(Router)
 
 export default new Router({
-	//mode: 'history',
-	//base : '/jmcWx',
-	routes: [{
-			path: '/',
-			name: 'Home',
-			component: Home
-		},
-		{
-			path: '/category',
-			name: 'Category',
-			component: Category
-		},
-		{
-			path: '/message',
-			name: 'Message',
-			component: Message
-		},
-		{
-			path: '/cart',
-			name: 'Cart',
-			component: Cart
-		},
-		{
-			path: '/user',
-			component: User,
-			children: [{
-					path: 'order',
-					name: 'UserOrder',
-					component: Order
-				},
-				{
-					path: '',
-					name: 'User',
-					component: UserMain
-				}
-			]
-		},
-		{
-			path: '/msginfo',
-			name: 'MsgInfo',
-			component: MsgInfo
-		},
-		{
-			path: '/login',
-			name: 'Login',
-			component: Login
-		},
-		{
-			path: '/goodinfo',
-			name: 'GoodInfo',
-			component: GoodInfo
-		},
-		{
-			path: '/search',
-			name: 'Search',
-			component: Search
-		}
-	]
+  //mode: 'history',
+  //base : '/jmcWx',
+  routes: [{
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/category',
+      name: 'Category',
+      component: Category
+    },
+    {
+      path: '/message',
+      name: 'Message',
+      component: Message
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
+    },
+    {
+      path: '/user',
+      component: User,
+      children: [{
+          path: 'order',
+          name: 'UserOrder',
+          component: Order
+        },
+        {
+          path: '',
+          name: 'User',
+          component: UserMain
+        }
+      ]
+    },
+    {
+      path: '/msginfo',
+      name: 'MsgInfo',
+      component: MsgInfo
+    },
+    {
+      path: '/login',
+      name: 'LoginNew',
+      component: LoginNew
+    },
+    {
+      path: '/goodinfo',
+      name: 'GoodInfo',
+      component: GoodInfo
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
+    }
+  ]
 })

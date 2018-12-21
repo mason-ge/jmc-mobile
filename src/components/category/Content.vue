@@ -1,14 +1,8 @@
 <template>
   <div class="wrap">
-    <div
-      class="wrapper"
-      ref="wrapper"
-    >
+    <div class="wrapper" ref="wrapper">
       <div class="content">
-        <div
-          class="content-sec"
-          v-show="showFlg"
-        >
+        <div class="content-sec" v-show="showFlg">
           <span
             v-for="(tab ,index) in secCatgList"
             :class="{cur:isActive==index}"
@@ -26,15 +20,8 @@
               no-data-text="没有更多商品哦"
             >
               <ul>
-                <li
-                  v-for="(value,index) in prodList"
-                  :key="index"
-                  @click="handleClick(value)"
-                >
-                  <img
-                    v-bind:src="value.img"
-                    :alt="value.prodName"
-                  />
+                <li v-for="(value,index) in prodList" :key="index" @click="handleClick(value)">
+                  <img v-bind:src="value.img" :alt="value.prodName">
                   <span class="text">{{value.prodName}}</span>
                 </li>
               </ul>
@@ -94,7 +81,7 @@ export default {
       this.$router.push({
         name: "GoodInfo",
         params: {
-          name : "GoodInfo",
+          name: "GoodInfo",
           data: value
         }
       });
