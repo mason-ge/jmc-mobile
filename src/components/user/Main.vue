@@ -58,6 +58,7 @@
 	import Storage from '../../util/Storage.js'
 	import {mapGetters} from 'vuex'
 	import UserInfo from './UserInfo.vue'
+	import { setCookie,getCookie,delCookie } from '../../assets/js/cookie.js'
 	const menu = [
 		{
 			imgSrc:'static/img/user/about/1.png',
@@ -131,6 +132,7 @@
 					//返回Promise 
 					MessageBox.confirm('确定退出吗?').then(action => {
 					  Storage.del('user');
+					  delCookie('username')
 					  this.$router.push('/');
 					  location.reload();
 					},err=>{
